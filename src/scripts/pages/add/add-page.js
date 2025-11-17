@@ -59,6 +59,9 @@ export default class AddPage {
           const lng = position.coords.longitude;
           map.setView([lat, lng], 15);
           currentMarker = L.marker([lat, lng]).addTo(map).bindPopup('Your Location').openPopup();
+          // SIMPAN KOORDINAT OTOMATIS
+          document.getElementById('lat').value = lat;
+          document.getElementById('lon').value = lng;
         },
         (error) => {
           console.warn('Geolocation error:', error);
@@ -150,7 +153,7 @@ export default class AddPage {
         formData.append('lat', latValue || '0');
         formData.append('lon', lonValue || '0');
         
-        let result;
+        console.log("ini formdata", Object.fromEntries(formData)); let result;
         if (token) {
           result = await addStory(formData);
         } else {
