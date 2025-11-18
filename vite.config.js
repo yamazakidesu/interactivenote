@@ -6,8 +6,13 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: {
-        enabled: true, // Enable PWA in development
+        enabled: false,
       },
+    
+      strategies: 'injectManifest',
+      srcDir: 'public',
+      filename: 'sw.js',
+      
       manifest: {
         name: 'Story App',
         short_name: 'Story',
@@ -60,45 +65,8 @@ export default defineConfig({
           },
         ],
       },
-      workbox: {
-        // Caching strategies
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/story-api\.dicoding\.dev\/v1\/.*/i,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'api-cache',
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24, // 24 hours
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
-          {
-            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'image-cache',
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
-              },
-            },
-          },
-          {
-            urlPattern: /\.(?:js|css)$/,
-            handler: 'StaleWhileRevalidate',
-            options: {
-              cacheName: 'static-resources',
-            },
-          },
-        ],
-        // Precache files
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,webp}'],
-      },
+      // HAPUS seluruh bagian workbox ini
+      // workbox: { ... }
     }),
   ],
   build: {
